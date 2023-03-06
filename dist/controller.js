@@ -37,7 +37,7 @@ export function controller() {
                 const text = dele.firstChild.innerText;
                 if (select.value === "CLOUD - STORAGE") {
                     const deleteRes = yield deleteItem(delId);
-                    deleteRes.status === 204 && todoContainer.removeChild(dele);
+                    deleteRes && deleteRes.status === 204 && todoContainer.removeChild(dele);
                 }
                 else if (select.value === "LOCAL - STORAGE") {
                     const todolist = get();
@@ -155,6 +155,7 @@ function refreshEvent() {
     return __awaiter(this, void 0, void 0, function* () {
         alert("CLOUD-STORAGE IS YOUR DEFAULT STORAGE");
         const arrTodo = yield getTodo(URL);
+        console.log(typeof arrTodo);
         arrTodo.map((result) => {
             addEvent(result);
         });

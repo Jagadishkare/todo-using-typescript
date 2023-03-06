@@ -159,4 +159,5 @@ deleteAllItem.addEventListener("click", () => {
 });
 
 refreshEvent();
-export { todoContainer, objectType };
+export { todoContainer};
+

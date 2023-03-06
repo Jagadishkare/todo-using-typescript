@@ -31,7 +31,7 @@ export function controller() {
       const text =( dele.firstChild as HTMLElement).innerText;
       if (select.value === "CLOUD - STORAGE") {
         const deleteRes = await deleteItem(delId);
-        deleteRes && deleteRes.status === 204 && todoContainer.removeChild(dele);
+        deleteRes && (deleteRes.status === 204 && todoContainer.removeChild(dele));
       } else if (select.value === "LOCAL - STORAGE") {
         const todolist = get();
         for (let i = 0; i < todolist.length; i++) {
@@ -154,10 +154,10 @@ addBtn.addEventListener("click", () => {
   createEvent();
 });
 
-deleteAllItem.addEventListener("click", () => {
-  deleteAllTask();
-});
+deleteAllItem.addEventListener("click",  deleteAllTask);
 
 refreshEvent();
 export { todoContainer};
+
+
 

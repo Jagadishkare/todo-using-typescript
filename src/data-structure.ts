@@ -1,10 +1,12 @@
 export class DataStructure {
+    name;
+    isCompleted;
+    id;
+
     constructor(name : string , isCompleted? : boolean, id? : string) {
-        return{
-            name,
-            isCompleted,
-            id
-        }
+        this.name = name,
+        this.isCompleted = isCompleted,
+        this.id = id
     }
 }
 

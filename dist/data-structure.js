@@ -1,9 +1,7 @@
 export class DataStructure {
     constructor(name, isCompleted, id) {
-        return {
-            name,
-            isCompleted,
-            id
-        };
+        this.name = name,
+            this.isCompleted = isCompleted,
+            this.id = id;
     }
 }

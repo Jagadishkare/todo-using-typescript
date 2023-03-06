@@ -61,13 +61,13 @@ export function controller() {
         const text = todoInput.value;
         if (select.value === "CLOUD - STORAGE") {
           const editResponse = await editTodo(savId, text);
-          editResponse &&  (editResponse.status === 204 && addEvent(new DataStructure(text,false, savId)as objectType))  
+          editResponse &&  (editResponse.status === 204 && addEvent(new DataStructure(text,false, savId)))  
         } else {
           const todolist = get();
           for (let i = 0; i < todolist.length; i++) {
             if (todolist[i].name === oldText) {
-              editTodoItem(i, new DataStructure(text) as objectType, todolist);
-              addEvent(new DataStructure(text) as objectType);
+              editTodoItem(i, new DataStructure(text), todolist);
+              addEvent(new DataStructure(text));
             }
           }
         }
@@ -111,7 +111,7 @@ async function createEvent() {
       const todolist = get();
       todolist.push(new DataStructure(text));
       setTodo(todolist);
-      addEvent(new DataStructure(text) as objectType);
+      addEvent(new DataStructure(text));
       todoInput.value = "";
     }
   }

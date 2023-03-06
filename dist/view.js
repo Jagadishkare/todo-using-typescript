@@ -6,18 +6,20 @@ export function TodoListView() {
         addEvent: function (result) {
             const para = prepareTodoPara();
             const node = prepareTodoItem(result.name);
-            const dBtn = prepareDeleteBtn(result.id);
-            const eBtn = prepareEditBtn(result.id);
-            let cBox = prepareCheckBox(result.id);
-            TodoListView().append(para, node);
-            TodoListView().append(para, cBox);
-            if (result.isCompleted === true) {
-                cBox.checked = true;
-                node.style.textDecoration = "line-through";
+            if (result.id) {
+                const dBtn = prepareDeleteBtn(result.id);
+                const eBtn = prepareEditBtn(result.id);
+                let cBox = prepareCheckBox(result.id);
+                TodoListView().append(para, node);
+                TodoListView().append(para, cBox);
+                if (result.isCompleted === true) {
+                    cBox.checked = true;
+                    node.style.textDecoration = "line-through";
+                }
+                TodoListView().append(para, eBtn);
+                TodoListView().append(para, dBtn);
+                TodoListView().append(todoContainer, para);
             }
-            TodoListView().append(para, eBtn);
-            TodoListView().append(para, dBtn);
-            TodoListView().append(todoContainer, para);
         },
         append: function (parent, child) {
             parent.appendChild(child);

@@ -1,6 +1,6 @@
-import {controller } from "./controller.js";
+import { controller } from "./controller.js";
 import { objectType } from "./types.js";
-const {saveEvent, editEvent, deleteEvent, checkEvent} = controller()
+const { saveEvent, editEvent, deleteEvent, checkEvent } = controller()
 const todoContainer = document.querySelector(".todoContainer") as HTMLDivElement
 
 
@@ -8,28 +8,30 @@ const todoContainer = document.querySelector(".todoContainer") as HTMLDivElement
 
 export function TodoListView() {
   return {
-    addEvent: function (result : objectType) {
+    addEvent: function (result: objectType) {
       const para = prepareTodoPara();
       const node = prepareTodoItem(result.name);
-      const dBtn = prepareDeleteBtn(result.id);
-      const eBtn = prepareEditBtn(result.id);
-      let cBox = prepareCheckBox(result.id) as HTMLInputElement;
-      TodoListView().append(para, node);
-      TodoListView().append(para, cBox);
-      if (result.isCompleted === true) {
-        cBox.checked = true;
-        node.style.textDecoration = "line-through";
+      if (result.id) {
+        const dBtn = prepareDeleteBtn(result.id);
+        const eBtn = prepareEditBtn(result.id);
+        let cBox = prepareCheckBox(result.id) as HTMLInputElement;
+        TodoListView().append(para, node);
+        TodoListView().append(para, cBox);
+        if (result.isCompleted === true) {
+          cBox.checked = true;
+          node.style.textDecoration = "line-through";
+        }
+        TodoListView().append(para, eBtn);
+        TodoListView().append(para, dBtn);
+        TodoListView().append(todoContainer, para);
       }
-      TodoListView().append(para, eBtn);
-      TodoListView().append(para, dBtn);
-      TodoListView().append(todoContainer, para);
     },
 
-    append: function (parent : Element, child : Element) {
+    append: function (parent: Element, child: Element) {
       parent.appendChild(child);
     },
-    
-    prepareSaveBtn: function (savId :string, edittext : string) {
+
+    prepareSaveBtn: function (savId: string, edittext: string) {
       const saveBtn = createElement("button", "saveBn");
       saveBtn.innerText = "SAVE";
       addAttributeEventListener(saveBtn, savId, () => {
@@ -40,15 +42,15 @@ export function TodoListView() {
   };
 }
 
-function createElement(element : string, elementClassName : string) {
+function createElement(element: string, elementClassName: string) {
   let task = document.createElement(element);
   task.className = elementClassName;
   return task;
 }
 
-function addAttributeEventListener(element : HTMLElement, id : string  , onClickFunction : Function) {
+function addAttributeEventListener(element: HTMLElement, id: string, onClickFunction: Function) {
   element.setAttribute("id", id);
-  element.addEventListener("click", ()=>onClickFunction());
+  element.addEventListener("click", () => onClickFunction());
   return element;
 }
 
@@ -57,7 +59,7 @@ function prepareTodoPara() {
   return taskPara;
 }
 
-function prepareCheckBox(checkId : string) {
+function prepareCheckBox(checkId: string) {
   const checkBox = createElement("input", "check") as HTMLInputElement;
   checkBox.type = "checkbox";
   addAttributeEventListener(checkBox, checkId, () => {
@@ -66,13 +68,13 @@ function prepareCheckBox(checkId : string) {
   return checkBox;
 }
 
-function prepareTodoItem(taskName : string) {
+function prepareTodoItem(taskName: string) {
   const taskNode = createElement("span", "task-span");
   taskNode.innerText = taskName;
   return taskNode;
 }
 
-function prepareEditBtn(editId : string) {
+function prepareEditBtn(editId: string) {
   const editBtn = createElement("button", "editBn");
   editBtn.innerText = "EDIT";
   addAttributeEventListener(editBtn, editId, () => {
@@ -81,7 +83,7 @@ function prepareEditBtn(editId : string) {
   return editBtn;
 }
 
-function prepareDeleteBtn(delId : string) {
+function prepareDeleteBtn(delId: string) {
   const deleteBtn = createElement("button", "deleteBn");
   deleteBtn.innerText = "DELETE\n";
   addAttributeEventListener(deleteBtn, delId, () => {

@@ -1,4 +1,5 @@
-import { todoContainer , objectType } from "./controller.js";
+import { todoContainer} from "./controller.js";
+import { objectType } from "./types.js";
 import { LocalStore } from "./local-storage.js";
 import { CloudStorage } from "./cloud-storage.js";
 import { DataStructure } from "./data-structure.js";
@@ -8,7 +9,7 @@ function checkEventLocal(checkText : HTMLSpanElement, display : string , status 
     checkText.style.textDecoration = display;
     for (let i = 0; i < todolist.length; i++) {
       if (todolist[i].name === Text) {
-        LocalStore().editTodoItem(i, new DataStructure(todolist[i].name, status) as objectType, todolist);
+        LocalStore().editTodoItem(i, new DataStructure(todolist[i].name, status), todolist);
       }
     }
   }

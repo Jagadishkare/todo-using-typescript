@@ -30,8 +30,8 @@ export function controller() {
       const dele = deleteBtn.parentElement as HTMLElement;  
       const text =( dele.firstChild as HTMLElement).innerText;
       if (select.value === "CLOUD - STORAGE") {
-        const deleteRes = await deleteItem(delId) as Response;
-        deleteRes.status === 204 && todoContainer.removeChild(dele);
+        const deleteRes = await deleteItem(delId);
+        deleteRes && deleteRes.status === 204 && todoContainer.removeChild(dele);
       } else if (select.value === "LOCAL - STORAGE") {
         const todolist = get();
         for (let i = 0; i < todolist.length; i++) {
@@ -61,9 +61,7 @@ export function controller() {
         const text = todoInput.value;
         if (select.value === "CLOUD - STORAGE") {
           const editResponse = await editTodo(savId, text);
-          editResponse &&  (editResponse.status === 204 && addEvent(new DataStructure(text,false, savId)as objectType))
-            
-          
+          editResponse &&  (editResponse.status === 204 && addEvent(new DataStructure(text,false, savId)as objectType))  
         } else {
           const todolist = get();
           for (let i = 0; i < todolist.length; i++) {
@@ -138,7 +136,8 @@ function deleteAllTask() {
 async function refreshEvent() {
   alert("CLOUD-STORAGE IS YOUR DEFAULT STORAGE");
   const arrTodo : unknown =  await getTodo(URL);
-  (arrTodo as Array<objectType>).map((result : objectType) => {
+  console.log(typeof arrTodo);
+   (arrTodo as Array<objectType>).map((result : objectType) => {
     addEvent(result);
   });
 }

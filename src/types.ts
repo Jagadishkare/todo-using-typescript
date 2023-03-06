@@ -1,5 +1,5 @@
 export interface objectType{
     name : string;
-    isCompleted : boolean;
-    id : string
+    isCompleted ?: boolean;
+    id ?: string
 }

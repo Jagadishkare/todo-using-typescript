@@ -2,6 +2,7 @@ import { TodoListView } from "./view.js";
 import { DataStructure } from "./data-structure.js";
 import { CloudStorage, URL } from "./cloud-storage.js";
 import { LocalStore , setTodo} from "./local-storage.js";
+import { objectType } from "./types.js";
 import { checkEventCloud , checkEventLocal, selectMethod } from "./controller-dependencies.js";
 const todoInput = document.querySelector(".todoInput") as HTMLInputElement;
 const select = document.querySelector(".select") as HTMLSelectElement;
@@ -13,11 +14,6 @@ const { addEvent, append, prepareSaveBtn } = TodoListView();
 const { getTodo, createTodo, deleteItem, deleteAll, editTodo } = CloudStorage();
 const {get, deleteAlltodoItem, deletetodoItem, editTodoItem} = LocalStore();
 
-interface objectType{
-    name : string;
-    isCompleted : boolean;
-    id : string
-}
 
 todoInput.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {

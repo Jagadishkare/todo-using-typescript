@@ -1,4 +1,4 @@
-import { objectType } from "./controller";
+import { objectType } from "./types.js";
 const storage = localStorage;
 export function LocalStore() {
     

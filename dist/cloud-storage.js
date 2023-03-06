@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const URL = "https://mk-todo-web-api.azurewebsites.net/api/JagadishTodoItems";
 const deleteURL = "https://mk-todo-web-api.azurewebsites.net/JagadishTodoItems/deleteAll";
-import { DataStructure } from "./Datastructure.js";
+import { DataStructure } from "./data-structure.js";
 function CloudStorage() {
     return {
         getTodo: (apiURL) => __awaiter(this, void 0, void 0, function* () {

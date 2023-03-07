@@ -7,10 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { TodoListView } from "./view.js";
-import { DataStructure } from "./data-structure.js";
-import { CloudStorage, URL } from "./cloud-storage.js";
-import { LocalStore, setTodo } from "./local-storage.js";
+import { TodoListView } from "../view/view.js";
+import { DataStructure } from "../utils/data-structure.js";
+import { CloudStorage, URL } from "../model/cloud-storage.js";
+import { LocalStore, setTodo } from "../local-storage.js";
 import { checkEventCloud, checkEventLocal, selectMethod } from "./controller-dependencies.js";
 const todoInput = document.querySelector(".todoInput");
 const select = document.querySelector(".select");

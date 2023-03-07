@@ -1,4 +1,4 @@
-import { controller } from "./controller/controller.js";
+import { controller } from "../controller/controller.js";
 const { saveEvent, editEvent, deleteEvent, checkEvent } = controller();
 const todoContainer = document.querySelector(".todoContainer");
 export function TodoListView() {

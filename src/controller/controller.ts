@@ -1,8 +1,8 @@
-import { TodoListView } from "./view.js";
-import { DataStructure } from "./data-structure.js";
-import { CloudStorage, URL } from "./cloud-storage.js";
-import { LocalStore , setTodo} from "./local-storage.js";
-import { objectType } from "./types.js";
+import { TodoListView } from "../view/view.js";
+import { DataStructure } from "../utils/data-structure.js";
+import { CloudStorage, URL } from "../model/cloud-storage.js";
+import { LocalStore , setTodo} from "../local-storage.js";
+import { objectType } from "../utils/types.js";
 import { checkEventCloud , checkEventLocal, selectMethod } from "./controller-dependencies.js";
 const todoInput = document.querySelector(".todoInput") as HTMLInputElement;
 const select = document.querySelector(".select") as HTMLSelectElement;
@@ -107,7 +107,7 @@ async function createEvent() {
       const response = await (await createTodo(text))?.json();
       addEvent(response);
       todoInput.value = "";
-    } else {
+    } else if (select.value === "LOCAL - STORAGE") {
       const todolist = get();
       todolist.push(new DataStructure(text));
       setTodo(todolist);

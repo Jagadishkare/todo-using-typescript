@@ -1,5 +1,5 @@
-import { controller } from "./controller.js";
-import { objectType } from "./types.js";
+import { controller } from "../controller/controller.js";
+import { objectType } from "../utils/types.js";
 const { saveEvent, editEvent, deleteEvent, checkEvent } = controller()
 const todoContainer = document.querySelector(".todoContainer") as HTMLDivElement
 

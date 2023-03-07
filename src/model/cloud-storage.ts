@@ -1,7 +1,7 @@
 const URL = "https://mk-todo-web-api.azurewebsites.net/api/JagadishTodoItems";
 const deleteURL = "https://mk-todo-web-api.azurewebsites.net/JagadishTodoItems/deleteAll";
-import { objectType } from "./types.js";
-import { DataStructure } from "./data-structure.js";
+import { objectType } from "../utils/types.js";
+import { DataStructure } from "../utils/data-structure.js";
 function CloudStorage(){
     
     return{

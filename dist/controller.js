@@ -155,7 +155,6 @@ function refreshEvent() {
     return __awaiter(this, void 0, void 0, function* () {
         alert("CLOUD-STORAGE IS YOUR DEFAULT STORAGE");
         const arrTodo = yield getTodo(URL);
-        console.log(typeof arrTodo);
         arrTodo.map((result) => {
             addEvent(result);
         });
@@ -169,9 +168,7 @@ select.addEventListener("change", () => __awaiter(void 0, void 0, void 0, functi
         selectMethod(get());
     }
 }));
-addBtn.addEventListener("click", () => {
-    createEvent();
-});
+addBtn.addEventListener("click", createEvent);
 deleteAllItem.addEventListener("click", deleteAllTask);
 refreshEvent();
 export { todoContainer };

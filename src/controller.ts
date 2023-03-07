@@ -136,7 +136,6 @@ function deleteAllTask() {
 async function refreshEvent() {
   alert("CLOUD-STORAGE IS YOUR DEFAULT STORAGE");
   const arrTodo : unknown =  await getTodo(URL);
-  console.log(typeof arrTodo);
    (arrTodo as Array<objectType>).map((result : objectType) => {
     addEvent(result);
   });
@@ -150,9 +149,7 @@ select.addEventListener("change", async () => {
   }
 });
 
-addBtn.addEventListener("click", () => {
-  createEvent();
-});
+addBtn.addEventListener("click", createEvent);
 
 deleteAllItem.addEventListener("click",  deleteAllTask);
 

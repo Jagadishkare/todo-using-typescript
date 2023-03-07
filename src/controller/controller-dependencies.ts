@@ -1,9 +1,9 @@
-import { todoContainer} from "./controller.js";
-import { objectType } from "../utils/types.js";
-import { LocalStore } from "../local-storage.js";
-import { CloudStorage } from "../model/cloud-storage.js";
-import { DataStructure } from "../utils/data-structure.js";
-import { TodoListView } from "../view/view.js";
+import { todoContainer} from './controller.js';
+import { objectType } from '../utils/types.js';
+import { LocalStore } from '../model/local-storage.js';
+import { CloudStorage } from '../model/cloud-storage.js';
+import { DataStructure } from '../utils/data-structure.js';
+import { TodoListView } from '../view/view.js';
 
 function checkEventLocal(checkText : HTMLSpanElement, display : string , status : boolean, Text : string, todolist : Array<objectType> ) {
     checkText.style.textDecoration = display;
@@ -16,7 +16,7 @@ function checkEventLocal(checkText : HTMLSpanElement, display : string , status 
   
 async function selectMethod(method : Promise<objectType> | Function) {
     const array : unknown = await method;
-    todoContainer.innerHTML = "";
+    todoContainer.innerHTML = '';
     (array as Array<objectType>).map((obj) => {
         TodoListView().addEvent(obj);
     });

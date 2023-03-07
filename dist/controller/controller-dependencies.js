@@ -7,11 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { todoContainer } from "./controller.js";
-import { LocalStore } from "../local-storage.js";
-import { CloudStorage } from "../model/cloud-storage.js";
-import { DataStructure } from "../utils/data-structure.js";
-import { TodoListView } from "../view/view.js";
+import { todoContainer } from './controller.js';
+import { LocalStore } from '../model/local-storage.js';
+import { CloudStorage } from '../model/cloud-storage.js';
+import { DataStructure } from '../utils/data-structure.js';
+import { TodoListView } from '../view/view.js';
 function checkEventLocal(checkText, display, status, Text, todolist) {
     checkText.style.textDecoration = display;
     for (let i = 0; i < todolist.length; i++) {
@@ -23,7 +23,7 @@ function checkEventLocal(checkText, display, status, Text, todolist) {
 function selectMethod(method) {
     return __awaiter(this, void 0, void 0, function* () {
         const array = yield method;
-        todoContainer.innerHTML = "";
+        todoContainer.innerHTML = '';
         array.map((obj) => {
             TodoListView().addEvent(obj);
         });

@@ -2,8 +2,7 @@ const storage = localStorage;
 export function LocalStore() {
     return {
         get: function () {
-            let list = JSON.parse(`${storage.getItem("todo")}`) || [];
-            return list;
+            return JSON.parse(`${storage.getItem('todo')}`) || [];
         },
         deletetodoItem: function (index, list) {
             list.splice(index, 1);
@@ -19,5 +18,5 @@ export function LocalStore() {
     };
 }
 export function setTodo(arr) {
-    storage.setItem("todo", JSON.stringify(arr));
+    storage.setItem('todo', JSON.stringify(arr));
 }

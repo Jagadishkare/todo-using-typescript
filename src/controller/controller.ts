@@ -127,7 +127,7 @@ function deleteAllTask() {
 
 async function refreshEvent() {
   alert('CLOUD-STORAGE IS YOUR DEFAULT STORAGE');
-  const arrTodo : unknown =  await getTodo(URL);
+  const arrTodo : Object =  await getTodo(URL);
    (arrTodo as Array<IObjectType>).map((result : IObjectType) => addEvent(result));
 }
 

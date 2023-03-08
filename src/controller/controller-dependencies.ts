@@ -15,7 +15,7 @@ function checkEventLocal(checkText : HTMLSpanElement, display : string , status 
   }
   
 async function selectMethod(method : Promise<IObjectType> | Function) {
-    const array : unknown = await method;
+    const array : Object = await method;
     todoContainer.innerHTML = '';
     (array as Array<IObjectType>).map((obj) => {
         TodoListView().addEvent(obj);

@@ -2,10 +2,10 @@ import { TodoListView, append } from '../view/view.js';
 import { DataStructure } from '../utils/data-structure.js';
 import { CloudStorage, URL } from '../model/cloud-storage.js';
 import { LocalStore , setTodo} from '../model/local-storage.js';
-import { objectType } from '../utils/types.js';
+import { IObjectType } from '../utils/types.js';
 import { checkEventCloud , checkEventLocal, selectMethod } from './controller-dependencies.js';
 
-const todoInput = document.querySelector('.todoInput') as HTMLInputElement;
+let todoInput = document.querySelector('.todoInput') as HTMLInputElement;
 const select = document.querySelector('.select') as HTMLSelectElement;
 const addBtn = document.querySelector('.addBtn') as HTMLButtonElement;
 const todoContainer = document.querySelector('.todoContainer') as HTMLDivElement;
@@ -28,7 +28,7 @@ todoInput.addEventListener('keypress', function (event) {
 
 export function controller() {
   return {
-    deleteEvent: async function (deleteBtn : HTMLElement , delId : string) {
+    deleteEvent: async function (deleteBtn : HTMLElement , delId? : number) {
       const dele = deleteBtn.parentElement as HTMLElement;  
       const text = ( dele.firstChild as HTMLElement).innerText;
       if (select.value === 'CLOUD - STORAGE') {
@@ -45,25 +45,25 @@ export function controller() {
       }
     },
 
-    editEvent: function (editBtn : HTMLButtonElement, editId : string) {
+    editEvent: function (editBtn : HTMLButtonElement, editId? : number) {
       const editBn  = editBtn.parentNode as HTMLBodyElement
       const edittext = (editBn.firstChild as HTMLElement).innerText;
       todoInput.value = edittext;
       todoContainer.removeChild(editBn);
       mainDiv.removeChild(addBtn);
-      const save = prepareSaveBtn(editId, edittext);
+      const save = prepareSaveBtn( edittext, editId);
       save.className = 'saveBtn';
       append(mainDiv, save);
     },
 
-    saveEvent: async function (saveBtn : HTMLButtonElement, oldText : string , savId : string) {
+    saveEvent: async function (saveBtn : HTMLButtonElement, oldText : string , savId ?: number) {
       if (todoInput.value === '') {
         alert('ENTER YOUR TASK...');
       } else {
         const text = todoInput.value;
         if (select.value === 'CLOUD - STORAGE') {
-          const editResponse = await editTodo(savId, text);
-          editResponse && (editResponse.status === 204 && addEvent(new DataStructure(text,false, savId)))  
+          const editResponse = await editTodo( text, false, savId);
+          editResponse && (editResponse.status === 204 && addEvent(new DataStructure(text, false, savId)))  
         } else {
           const todolist = get();
           for (let i = 0; i < todolist.length; i++) {
@@ -79,12 +79,12 @@ export function controller() {
       }
     },
 
-    checkEvent: async function (checkBox : HTMLElement  , id : string) {
+    checkEvent: async function (checkBox : HTMLElement  , id? : number) {
       const checkText = (checkBox.parentElement as HTMLElement).firstChild;
       const Text = (checkText as HTMLElement).innerText;
       if (select.value === 'CLOUD - STORAGE') {
-        (checkBox as HTMLInputElement).checked ? checkEventCloud(checkText as HTMLSpanElement, 'line-through', id, Text, true)
-        : checkEventCloud(checkText as HTMLSpanElement, 'none', id, Text);
+        (checkBox as HTMLInputElement).checked ? id && checkEventCloud(checkText as HTMLSpanElement, 'line-through', id, Text, true)
+        : id && checkEventCloud(checkText as HTMLSpanElement, 'none', id, Text);
       } else {
         const todolist = get();
         (checkBox as HTMLInputElement).checked ? checkEventLocal(checkText as HTMLSpanElement, 'line-through', true, Text, todolist)
@@ -96,20 +96,19 @@ export function controller() {
 }
 
 async function createEvent() {
-  let text = todoInput.value;
-  if (!text) {
+  if (!todoInput.value) {
     alert('ENTER YOUR TASK...');
   } else {
     if (select.value === 'CLOUD - STORAGE') {
-      const response = await (await createTodo(text))?.json();
-      addEvent(response);
-      text = '';
+      const response = await (await createTodo(todoInput.value))?.json();
+      addEvent(response)
+      todoInput.value = '';
     } else if (select.value === 'LOCAL - STORAGE') {
       const todolist = get();
-      todolist.push(new DataStructure(text));
+      todolist.push(new DataStructure(todoInput.value));
       setTodo(todolist);
-      addEvent(new DataStructure(text));
-      text = '';
+      addEvent(new DataStructure(todoInput.value));
+      todoInput.value = '';
     }
   }
 }
@@ -129,7 +128,7 @@ function deleteAllTask() {
 async function refreshEvent() {
   alert('CLOUD-STORAGE IS YOUR DEFAULT STORAGE');
   const arrTodo : unknown =  await getTodo(URL);
-   (arrTodo as Array<objectType>).map((result : objectType) => addEvent(result));
+   (arrTodo as Array<IObjectType>).map((result : IObjectType) => addEvent(result));
 }
 
 select.addEventListener('change', async () => {

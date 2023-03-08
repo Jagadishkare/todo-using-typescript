@@ -12,7 +12,7 @@ import { DataStructure } from '../utils/data-structure.js';
 import { CloudStorage, URL } from '../model/cloud-storage.js';
 import { LocalStore, setTodo } from '../model/local-storage.js';
 import { checkEventCloud, checkEventLocal, selectMethod } from './controller-dependencies.js';
-const todoInput = document.querySelector('.todoInput');
+let todoInput = document.querySelector('.todoInput');
 const select = document.querySelector('.select');
 const addBtn = document.querySelector('.addBtn');
 const todoContainer = document.querySelector('.todoContainer');
@@ -56,7 +56,7 @@ export function controller() {
             todoInput.value = edittext;
             todoContainer.removeChild(editBn);
             mainDiv.removeChild(addBtn);
-            const save = prepareSaveBtn(editId, edittext);
+            const save = prepareSaveBtn(edittext, editId);
             save.className = 'saveBtn';
             append(mainDiv, save);
         },
@@ -68,7 +68,7 @@ export function controller() {
                 else {
                     const text = todoInput.value;
                     if (select.value === 'CLOUD - STORAGE') {
-                        const editResponse = yield editTodo(savId, text);
+                        const editResponse = yield editTodo(text, false, savId);
                         editResponse && (editResponse.status === 204 && addEvent(new DataStructure(text, false, savId)));
                     }
                     else {
@@ -91,8 +91,8 @@ export function controller() {
                 const checkText = checkBox.parentElement.firstChild;
                 const Text = checkText.innerText;
                 if (select.value === 'CLOUD - STORAGE') {
-                    checkBox.checked ? checkEventCloud(checkText, 'line-through', id, Text, true)
-                        : checkEventCloud(checkText, 'none', id, Text);
+                    checkBox.checked ? id && checkEventCloud(checkText, 'line-through', id, Text, true)
+                        : id && checkEventCloud(checkText, 'none', id, Text);
                 }
                 else {
                     const todolist = get();
@@ -106,22 +106,21 @@ export function controller() {
 function createEvent() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        let text = todoInput.value;
-        if (!text) {
+        if (!todoInput.value) {
             alert('ENTER YOUR TASK...');
         }
         else {
             if (select.value === 'CLOUD - STORAGE') {
-                const response = yield ((_a = (yield createTodo(text))) === null || _a === void 0 ? void 0 : _a.json());
+                const response = yield ((_a = (yield createTodo(todoInput.value))) === null || _a === void 0 ? void 0 : _a.json());
                 addEvent(response);
-                text = '';
+                todoInput.value = '';
             }
             else if (select.value === 'LOCAL - STORAGE') {
                 const todolist = get();
-                todolist.push(new DataStructure(text));
+                todolist.push(new DataStructure(todoInput.value));
                 setTodo(todolist);
-                addEvent(new DataStructure(text));
-                text = '';
+                addEvent(new DataStructure(todoInput.value));
+                todoInput.value = '';
             }
         }
     });

@@ -1,4 +1,4 @@
-import { objectType } from '../utils/types.js';
+import { IObjectType } from '../utils/types.js';
 import { DataStructure } from '../utils/data-structure.js';
 
 const URL = 'https://mk-todo-web-api.azurewebsites.net/api/JagadishTodoItems';
@@ -7,7 +7,7 @@ const deleteURL = 'https://mk-todo-web-api.azurewebsites.net/JagadishTodoItems/d
 function CloudStorage() {
     return{
        
-        getTodo  : async (apiURL : string) : Promise<objectType> => {
+        getTodo  : async (apiURL : string) : Promise<IObjectType> => {
             const response = await fetch( apiURL, { method : 'GET'})
             return await response.json()
         },
@@ -19,14 +19,14 @@ function CloudStorage() {
                 })
         },
 
-        editTodo :async function(todoId : string , changeName : string , status = false) {
+        editTodo :async function( changeName : string , status? : boolean, todoId? : number ) {
             return await setItem(`${URL}/${todoId}` , {
                 method : 'PUT',
                 body : JSON.stringify( new DataStructure( changeName, status , todoId))
             })
         },
 
-        deleteItem : async function(todoId : string) {
+        deleteItem : async function(todoId? : number) {
             return await setItem(`${URL}/${todoId}`, { method : 'DELETE' });
         },
 

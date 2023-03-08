@@ -1,4 +1,4 @@
-import { objectType } from '../utils/types.js';
+import { IObjectType } from '../utils/types.js';
 const storage = localStorage;
 export function LocalStore() {
     
@@ -8,7 +8,7 @@ export function LocalStore() {
             return JSON.parse(`${storage.getItem('todo')}`) || [] 
         },
 
-        deletetodoItem : function (index : number , list : Array<objectType>) {
+        deletetodoItem : function (index : number , list : Array<IObjectType>) {
             list.splice(index , 1);
            setTodo(list);
         },
@@ -17,13 +17,13 @@ export function LocalStore() {
            setTodo([]);
         },
 
-        editTodoItem : function (index : number , editName : objectType , list : Array<objectType>) {
+        editTodoItem : function (index : number , editName : IObjectType , list : Array<IObjectType>) {
             list.splice(index , 1 , editName)
            setTodo(list);
         }
     }
 }
 
-export function setTodo (arr : Array<objectType>) {
+export function setTodo (arr : Array<IObjectType>) {
          storage.setItem('todo' , JSON.stringify(arr))
 }

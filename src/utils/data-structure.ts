@@ -3,7 +3,7 @@ export class DataStructure {
     isCompleted;
     id;
 
-    constructor(name : string , isCompleted? : boolean, id? : string) {
+    constructor(name : string , isCompleted : boolean = false, id ?: number) {
         this.name = name,
         this.isCompleted = isCompleted,
         this.id = id

@@ -1,32 +1,29 @@
 import { controller } from '../controller/controller.js';
 const { saveEvent, editEvent, deleteEvent, checkEvent } = controller();
 const todoContainer = document.querySelector('.todoContainer');
+const select = document.querySelector('.select');
 export function TodoListView() {
     return {
         addEvent: function (result) {
             const para = prepareTodoPara();
-            const node = prepareTodoItem(result.name);
-            if (result.id) {
-                // const dBtn = prepareDeleteBtn(result.id);
-                // const eBtn = prepareEditBtn(result.id);
-                let cBox = prepareCheckBox(result.id);
-                append(para, node);
-                append(para, cBox);
-                if (result.isCompleted === true) {
-                    cBox.checked = true;
-                    node.style.textDecoration = 'line-through';
-                }
-                append(para, prepareEditBtn(result.id));
-                append(para, prepareDeleteBtn(result.id));
-                append(todoContainer, para);
+            let node = prepareTodoItem(result.name);
+            const checkBox = prepareCheckBox(result.id);
+            append(para, node);
+            append(para, checkBox);
+            if (result.isCompleted) {
+                checkBox.checked = true;
+                node.style.textDecoration = 'line-through';
             }
+            append(para, prepareEditBtn(result.id));
+            append(para, prepareDeleteBtn(result.id));
+            append(todoContainer, para);
         },
-        prepareSaveBtn: function (saveId, editText) {
+        prepareSaveBtn: function (editText, saveId) {
             const saveBtn = createElement('button', 'saveBn');
             saveBtn.innerText = 'SAVE';
-            addAttributeEventListener(saveBtn, saveId, () => {
+            addAttributeEventListener(saveBtn, () => {
                 saveEvent(saveBtn, editText, saveId);
-            });
+            }, saveId);
             return saveBtn;
         },
     };
@@ -36,8 +33,8 @@ function createElement(element, elementClassName) {
     task.className = elementClassName;
     return task;
 }
-function addAttributeEventListener(element, id, onClickFunction) {
-    element.setAttribute('id', id);
+function addAttributeEventListener(element, onClickFunction, id) {
+    element.setAttribute('id', `${id}`);
     element.addEventListener('click', () => onClickFunction());
     return element;
 }
@@ -48,9 +45,9 @@ function prepareTodoPara() {
 function prepareCheckBox(checkId) {
     const checkBox = createElement('input', 'check');
     checkBox.type = 'checkbox';
-    addAttributeEventListener(checkBox, checkId, () => {
+    addAttributeEventListener(checkBox, () => {
         checkEvent(checkBox, checkId);
-    });
+    }, checkId);
     return checkBox;
 }
 function prepareTodoItem(taskName) {
@@ -61,17 +58,17 @@ function prepareTodoItem(taskName) {
 function prepareEditBtn(editId) {
     const editBtn = createElement('button', 'editBn');
     editBtn.innerText = 'EDIT';
-    addAttributeEventListener(editBtn, editId, () => {
+    addAttributeEventListener(editBtn, () => {
         editEvent(editBtn, editId);
-    });
+    }, editId);
     return editBtn;
 }
 function prepareDeleteBtn(deleteId) {
     const deleteBtn = createElement('button', 'deleteBn');
     deleteBtn.innerText = 'DELETE\n';
-    addAttributeEventListener(deleteBtn, deleteId, () => {
+    addAttributeEventListener(deleteBtn, () => {
         deleteEvent(deleteBtn, deleteId);
-    });
+    }, deleteId);
     return deleteBtn;
 }
 export function append(parent, child) {

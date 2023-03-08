@@ -1,5 +1,5 @@
-export interface objectType{
+export interface IObjectType{
     name : string;
     isCompleted ?: boolean;
-    id ?: string
+    id ?: number 
 }

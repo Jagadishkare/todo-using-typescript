@@ -32,7 +32,7 @@ function selectMethod(method) {
 function checkEventCloud(checkText, display, id, Text, status) {
     return __awaiter(this, void 0, void 0, function* () {
         checkText.style.textDecoration = display;
-        yield CloudStorage().editTodo(id, Text, status);
+        yield CloudStorage().editTodo(Text, status, id);
     });
 }
 export { checkEventCloud, checkEventLocal, selectMethod };

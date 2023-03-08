@@ -22,7 +22,7 @@ function CloudStorage() {
                 body: JSON.stringify(new DataStructure(todoName)),
             });
         },
-        editTodo: function (todoId, changeName, status = false) {
+        editTodo: function (changeName, status, todoId) {
             return __awaiter(this, void 0, void 0, function* () {
                 return yield setItem(`${URL}/${todoId}`, {
                     method: 'PUT',

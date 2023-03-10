@@ -2,13 +2,12 @@ import { controller } from '../controller/controller.js';
 import { IObjectType } from '../utils/types.js';
 const { saveEvent, editEvent, deleteEvent, checkEvent } = controller()
 const todoContainer = document.querySelector('.todoContainer') as HTMLDivElement
-const select = document.querySelector('.select') as HTMLSelectElement;
 
 export function TodoListView() {
   return {
     addEvent: function (result: IObjectType) {
       const para = prepareTodoPara();
-      let node = prepareTodoItem(result.name);
+      const node = prepareTodoItem(result.name);
         const checkBox = prepareCheckBox(result.id) as HTMLInputElement;        
         append(para, node);
         append(para, checkBox);

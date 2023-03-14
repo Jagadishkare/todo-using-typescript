@@ -1,5 +1,7 @@
 import { controller } from '../controller/controller.js';
 import { IObjectType } from '../utils/types.js';
+import { Attributes } from './types';
+
 const { saveEvent, editEvent, deleteEvent, checkEvent } = controller()
 const todoContainer = document.querySelector('.todoContainer') as HTMLDivElement
 
@@ -8,19 +10,19 @@ export function TodoListView() {
     addEvent: function (result: IObjectType) {
       const para = prepareTodoPara();
       const node = prepareTodoItem(result.name);
-        const checkBox = prepareCheckBox(result.id) as HTMLInputElement;        
-        append(para, node);
-        append(para, checkBox);
-        if (result.isCompleted) {
-          checkBox.checked = true;
-          node.style.textDecoration = 'line-through';
-        }
-        append(para, prepareEditBtn(result.id));
-        append(para, prepareDeleteBtn(result.id));
-        append(todoContainer, para);
+      const checkBox = prepareCheckBox(result.id) as HTMLInputElement;
+      append(para, node);
+      append(para, checkBox);
+      if (result.isCompleted) {
+        checkBox.checked = true;
+        node.style.textDecoration = 'line-through';
+      }
+      append(para, prepareEditBtn(result.id));
+      append(para, prepareDeleteBtn(result.id));
+      append(todoContainer, para);
     },
 
-    prepareSaveBtn: function ( editText: string, saveId?: number) {
+    prepareSaveBtn: function (editText: string, saveId?: number) {
       const saveBtn = createElement('button', 'saveBn');
       saveBtn.innerText = 'SAVE';
       addAttributeEventListener(saveBtn, () => {
@@ -31,27 +33,27 @@ export function TodoListView() {
   };
 }
 
-function createElement(element: string, elementClassName: string) {
+function createElement(element: string, attributes: Attributes) {
   let task = document.createElement(element);
-  task.className = elementClassName;
+  Object.entries(attributes).forEach(([attrName, attrValue]) => {
+    task[attrName as keyof Attributes] = attrValue!;
+  });
   return task;
 }
 
+//SRP???
 function addAttributeEventListener(element: HTMLElement, onClickFunction: Function, id?: number) {
-  element.setAttribute('id', `${id}`);
   element.addEventListener('click', () => onClickFunction());
   return element;
 }
 
 function prepareTodoPara() {
-  const taskPara = createElement('p', 'task-para');
-  return taskPara;
+  return createElement('p', 'task-para');
 }
 
 function prepareCheckBox(checkId?: number) {
-  const checkBox = createElement('input', 'check') as HTMLInputElement;
-  checkBox.type = 'checkbox';
-    addAttributeEventListener(checkBox, () => {
+  const checkBox = createElement('input', { class: 'check', type: 'checkbox' }) as HTMLInputElement;
+  addAttributeEventListener(checkBox, () => {
     checkEvent(checkBox, checkId);
   }, checkId);
   return checkBox;
